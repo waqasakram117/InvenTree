@@ -121,21 +121,21 @@ ENTRYPOINT ["/bin/bash", "./init.sh"]
 # TODO: e.g. -b ${INVENTREE_WEB_ADDR}:${INVENTREE_WEB_PORT} fails here
 CMD gunicorn -c ./gunicorn.conf.py InvenTree.wsgi -b 0.0.0.0:8000 --chdir ./InvenTree
 
-FROM base as dev
+# FROM base as dev
 
-# The development image requires the source code to be mounted to /home/inventree/
-# So from here, we don't actually "do" anything, apart from some file management
+# # The development image requires the source code to be mounted to /home/inventree/
+# # So from here, we don't actually "do" anything, apart from some file management
 
-ENV INVENTREE_DEBUG=True
+# ENV INVENTREE_DEBUG=True
 
-# Location for python virtual environment
-# If the INVENTREE_PY_ENV variable is set, the entrypoint script will use it!
-ENV INVENTREE_PY_ENV="${INVENTREE_DATA_DIR}/env"
+# # Location for python virtual environment
+# # If the INVENTREE_PY_ENV variable is set, the entrypoint script will use it!
+# ENV INVENTREE_PY_ENV="${INVENTREE_DATA_DIR}/env"
 
-WORKDIR ${INVENTREE_HOME}
+# WORKDIR ${INVENTREE_HOME}
 
-# Entrypoint ensures that we are running in the python virtual environment
-ENTRYPOINT ["/bin/bash", "./docker/init.sh"]
+# # Entrypoint ensures that we are running in the python virtual environment
+# ENTRYPOINT ["/bin/bash", "./docker/init.sh"]
 
-# Launch the development server
-CMD ["invoke", "server", "-a", "${INVENTREE_WEB_ADDR}:${INVENTREE_WEB_PORT}"]
+# # Launch the development server
+# CMD ["invoke", "server", "-a", "${INVENTREE_WEB_ADDR}:${INVENTREE_WEB_PORT}"]
