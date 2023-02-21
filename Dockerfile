@@ -143,6 +143,6 @@
 
 FROM ubuntu:latest
 
-RUN apt-get update && apt-get install -y wget && apt-get -y install sudo
+RUN apt-get update && apt-get install -y wget && apt-get -y install sudo && apt-get -y install gnupg
 
 RUN wget -qO install.sh https://get.inventree.org && bash install.sh
