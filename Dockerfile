@@ -143,6 +143,6 @@
 
 FROM ubuntu:latest
 
-RUN apt-get update && apt-get install -y wget
+RUN apt-get update && apt-get install -y wget && apt-get -y install sudo
 
 RUN wget -qO install.sh https://get.inventree.org && bash install.sh
