@@ -17,9 +17,6 @@ RUN sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-
 # RUN sudo apt -y install docker.io
 
 # RUN sudo snap install docker
-
-RUN systemctl start docker
-RUN systemctl enable docker
  
  RUN sudo service docker start
 
