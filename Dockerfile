@@ -22,7 +22,7 @@ RUN sudo groupadd docker
 RUN sudo usermod -aG docker $(whoami)
 
 RUN newgrp docker
-RUN sudo service docker start
+RUN sudo service docker restart
  
 
 RUN docker --version
