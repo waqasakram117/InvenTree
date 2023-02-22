@@ -4,7 +4,7 @@ RUN apt-get update && apt-get install -y wget && apt-get -y install sudo && apt-
 
 RUN sudo apt-get remove docker docker.io
 
-RUN apt-get -y update
+RUN apt-get -y update && sudo apt-get install -y snapd
 
 RUN sudo apt -y install docker.io
 
