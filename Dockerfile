@@ -1,3 +1,31 @@
+FROM ubuntu:latest
+
+RUN sudo apt-get remove docker docker-engine docker.io
+
+RUN apt-get update && apt-get install -y wget && apt-get -y install sudo && apt-get -y install gnupg
+
+RUN sudo apt install docker.io
+
+RUN sudo snap install docker
+
+RUN docker --version
+
+RUN sudo docker run hello-world
+
+RUN sudo docker ps -a
+
+RUN sudo docker ps
+
+
+
+
+
+
+
+
+
+
+
 # The InvenTree dockerfile provides two build targets:
 #
 # production:
@@ -141,8 +169,8 @@
 # CMD ["invoke", "server", "-a", "${INVENTREE_WEB_ADDR}:${INVENTREE_WEB_PORT}"]
 
 
-FROM ubuntu:latest
+# FROM ubuntu:latest
 
-RUN apt-get update && apt-get install -y wget && apt-get -y install sudo && apt-get -y install gnupg
+# RUN apt-get update && apt-get install -y wget && apt-get -y install sudo && apt-get -y install gnupg
 
-RUN wget -qO install.sh https://get.inventree.org && bash install.sh
+# RUN wget -qO install.sh https://get.inventree.org && bash install.sh
