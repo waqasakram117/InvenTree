@@ -8,7 +8,7 @@ RUN apt-get -y update && sudo apt-get install -y snapd
 
 RUN sudo apt -y install docker.io
 
-RUN sudo snap -y install docker
+RUN sudo snap install docker
 
 RUN docker --version
 
