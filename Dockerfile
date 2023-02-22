@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-RUN apt-get update && apt-get install -y wget && apt-get -y install sudo && apt-get -y install gnupg
+RUN apt-get update && apt-get install -y wget && apt-get -y install sudo && apt-get -y install gnupg snapd
 
 RUN sudo apt-get remove docker docker.io containerd runc
 
