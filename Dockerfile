@@ -12,7 +12,7 @@ RUN sudo apt install -y apt-transport-https ca-certificates curl software-proper
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 RUN sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable"
 
-RUN sudo apt-get install -y docker-ce docker-ce-cli docker.io docker-buildx-plugin docker-compose-plugin
+RUN sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 # RUN sudo apt -y install docker.io
 
