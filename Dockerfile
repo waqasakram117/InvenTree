@@ -1,58 +1,3 @@
-FROM ubuntu:latest
-
-RUN apt-get update && apt-get install -y wget && apt-get -y install sudo && apt-get -y install gnupg snapd
-
-RUN sudo apt-get remove docker docker.io containerd runc
-
-# RUN sudo chmod a+r /etc/apt/keyrings/docker.gpg
-
-RUN apt-get -y update
-
-RUN sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
-RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-RUN sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable"
-
-RUN sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-# RUN sudo apt -y install docker.io
-
-RUN snap version
-
-RUN sudo snap install snapd
-
-RUN sudo snap services
-
-RUN sudo snap start docker
-
-# RUN sudo groupadd docker
-# RUN sudo usermod -aG docker $(whoami)
-
-# RUN newgrp docker
-# RUN sudo service docker start
-
-# RUN sudo systemctl enable docker.service
-# RUN sudo systemctl enable containerd.service
-
- 
-
-RUN docker --version
-
-RUN sudo docker run hello-world
-
-RUN sudo docker ps -a
-
-RUN sudo docker ps
-
-
-
-
-
-
-
-
-
-
-
 # The InvenTree dockerfile provides two build targets:
 #
 # production:
@@ -65,139 +10,132 @@ RUN sudo docker ps
 # - Monitors source files for any changes, and live-reloads server
 
 
-# FROM python:3.9-slim as base
+FROM python:3.9-slim as base
 
 # Build arguments for this image
-# ARG commit_hash=""
-# ARG commit_date=""
-# ARG commit_tag=""
+ARG commit_hash=""
+ARG commit_date=""
+ARG commit_tag=""
 
-# ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED 1
 
-# # Ref: https://github.com/pyca/cryptography/issues/5776
-# ENV CRYPTOGRAPHY_DONT_BUILD_RUST 1
+# Ref: https://github.com/pyca/cryptography/issues/5776
+ENV CRYPTOGRAPHY_DONT_BUILD_RUST 1
 
-# ENV INVENTREE_LOG_LEVEL="WARNING"
-# ENV INVENTREE_DOCKER="true"
+ENV INVENTREE_LOG_LEVEL="WARNING"
+ENV INVENTREE_DOCKER="true"
 
 # InvenTree paths
-# ENV INVENTREE_HOME="/home/inventree"
-# ENV INVENTREE_MNG_DIR="${INVENTREE_HOME}/InvenTree"
-# ENV INVENTREE_DATA_DIR="${INVENTREE_HOME}/data"
-# ENV INVENTREE_STATIC_ROOT="${INVENTREE_DATA_DIR}/static"
-# ENV INVENTREE_MEDIA_ROOT="${INVENTREE_DATA_DIR}/media"
-# ENV INVENTREE_BACKUP_DIR="${INVENTREE_DATA_DIR}/backup"
-# ENV INVENTREE_PLUGIN_DIR="${INVENTREE_DATA_DIR}/plugins"
+ENV INVENTREE_HOME="/home/inventree"
+ENV INVENTREE_MNG_DIR="${INVENTREE_HOME}/InvenTree"
+ENV INVENTREE_DATA_DIR="${INVENTREE_HOME}/data"
+ENV INVENTREE_STATIC_ROOT="${INVENTREE_DATA_DIR}/static"
+ENV INVENTREE_MEDIA_ROOT="${INVENTREE_DATA_DIR}/media"
+ENV INVENTREE_BACKUP_DIR="${INVENTREE_DATA_DIR}/backup"
+ENV INVENTREE_PLUGIN_DIR="${INVENTREE_DATA_DIR}/plugins"
 
 # InvenTree configuration files
-# ENV INVENTREE_CONFIG_FILE="${INVENTREE_DATA_DIR}/config.yaml"
-# ENV INVENTREE_SECRET_KEY_FILE="${INVENTREE_DATA_DIR}/secret_key.txt"
-# ENV INVENTREE_PLUGIN_FILE="${INVENTREE_DATA_DIR}/plugins.txt"
+ENV INVENTREE_CONFIG_FILE="${INVENTREE_DATA_DIR}/config.yaml"
+ENV INVENTREE_SECRET_KEY_FILE="${INVENTREE_DATA_DIR}/secret_key.txt"
+ENV INVENTREE_PLUGIN_FILE="${INVENTREE_DATA_DIR}/plugins.txt"
 
 # Worker configuration (can be altered by user)
-# ENV INVENTREE_GUNICORN_WORKERS="4"
-# ENV INVENTREE_BACKGROUND_WORKERS="4"
+ENV INVENTREE_GUNICORN_WORKERS="4"
+ENV INVENTREE_BACKGROUND_WORKERS="4"
 
 # Default web server address:port
-# ENV INVENTREE_WEB_ADDR=0.0.0.0
-# ENV INVENTREE_WEB_PORT=8000
+ENV INVENTREE_WEB_ADDR=0.0.0.0
+ENV INVENTREE_WEB_PORT=8000
 
-# LABEL org.label-schema.schema-version="1.0" \
-#       org.label-schema.build-date=${DATE} \
-#       org.label-schema.vendor="inventree" \
-#       org.label-schema.name="inventree/inventree" \
-#       org.label-schema.url="https://hub.docker.com/r/inventree/inventree" \
-#       org.label-schema.vcs-url="https://github.com/inventree/InvenTree.git" \
-#       org.label-schema.vcs-ref=${commit_tag}
+LABEL org.label-schema.schema-version="1.0" \
+      org.label-schema.build-date=${DATE} \
+      org.label-schema.vendor="inventree" \
+      org.label-schema.name="inventree/inventree" \
+      org.label-schema.url="https://hub.docker.com/r/inventree/inventree" \
+      org.label-schema.vcs-url="https://github.com/inventree/InvenTree.git" \
+      org.label-schema.vcs-ref=${commit_tag}
 
 # RUN apt-get upgrade && apt-get update
-# RUN apt-get update
+RUN apt-get update
 
 # Install required system packages
-# RUN apt-get install -y  --no-install-recommends \
-#     git gcc g++ gettext gnupg libffi-dev \
-#     # Weasyprint requirements : https://doc.courtbouillon.org/weasyprint/stable/first_steps.html#debian-11
-#     poppler-utils libpango-1.0-0 libpangoft2-1.0-0 \
-#     # Image format support
-#     libjpeg-dev webp libwebp-dev \
-#     # SQLite support
-#     sqlite3 \
-#     # PostgreSQL support
-#     libpq-dev postgresql-client \
-#     # MySQL / MariaDB support
-#     default-libmysqlclient-dev mariadb-client && \
-#  RUN   apt-get autoclean && apt-get autoremove
+RUN apt-get install -y  --no-install-recommends \
+    git gcc g++ gettext gnupg libffi-dev \
+    # Weasyprint requirements : https://doc.courtbouillon.org/weasyprint/stable/first_steps.html#debian-11
+    poppler-utils libpango-1.0-0 libpangoft2-1.0-0 \
+    # Image format support
+    libjpeg-dev webp libwebp-dev \
+    # SQLite support
+    sqlite3 \
+    # PostgreSQL support
+    libpq-dev postgresql-client \
+    # MySQL / MariaDB support
+    default-libmysqlclient-dev mariadb-client && \
+    apt-get autoclean && apt-get autoremove
 
 # Update pip
-# RUN pip install --upgrade pip
+RUN pip install --upgrade pip
 
 # Install required base-level python packages
-# COPY ./docker/requirements.txt base_requirements.txt
-# RUN pip install --disable-pip-version-check -U -r base_requirements.txt
+COPY ./docker/requirements.txt base_requirements.txt
+RUN pip install --disable-pip-version-check -U -r base_requirements.txt
 
 # InvenTree production image:
 # - Copies required files from local directory
 # - Installs required python packages from requirements.txt
 # - Starts a gunicorn webserver
 
-# FROM base as production
+FROM base as production
 
-# ENV INVENTREE_DEBUG=False
+ENV INVENTREE_DEBUG=False
 
 # As .git directory is not available in production image, we pass the commit information via ENV
-# ENV INVENTREE_COMMIT_HASH="${commit_hash}"
-# ENV INVENTREE_COMMIT_DATE="${commit_date}"
+ENV INVENTREE_COMMIT_HASH="${commit_hash}"
+ENV INVENTREE_COMMIT_DATE="${commit_date}"
 
 # Copy source code
-# COPY InvenTree ${INVENTREE_HOME}/InvenTree
+COPY InvenTree ${INVENTREE_HOME}/InvenTree
 
 # Copy other key files
-# COPY requirements.txt ${INVENTREE_HOME}/requirements.txt
-# COPY tasks.py ${INVENTREE_HOME}/tasks.py
-# COPY docker/gunicorn.conf.py ${INVENTREE_HOME}/gunicorn.conf.py
-# COPY docker/init.sh ${INVENTREE_MNG_DIR}/init.sh
+COPY requirements.txt ${INVENTREE_HOME}/requirements.txt
+COPY tasks.py ${INVENTREE_HOME}/tasks.py
+COPY docker/gunicorn.conf.py ${INVENTREE_HOME}/gunicorn.conf.py
+COPY docker/init.sh ${INVENTREE_MNG_DIR}/init.sh
 
 # Need to be running from within this directory
-# WORKDIR ${INVENTREE_MNG_DIR}
+WORKDIR ${INVENTREE_MNG_DIR}
 
 # Drop to the inventree user for the production image
-# RUN adduser inventree
-# RUN chown -R inventree:inventree ${INVENTREE_HOME}
-# USER inventree
+#RUN adduser inventree
+#RUN chown -R inventree:inventree ${INVENTREE_HOME}
+#USER inventree
 
 # Install InvenTree packages
-# RUN pip3 install --user --disable-pip-version-check -r ${INVENTREE_HOME}/requirements.txt
+RUN pip3 install --user --disable-pip-version-check -r ${INVENTREE_HOME}/requirements.txt
 
 # Server init entrypoint
-# ENTRYPOINT ["/bin/bash", "./init.sh"]
+ENTRYPOINT ["/bin/bash", "./init.sh"]
 
 # Launch the production server
 # TODO: Work out why environment variables cannot be interpolated in this command
 # TODO: e.g. -b ${INVENTREE_WEB_ADDR}:${INVENTREE_WEB_PORT} fails here
-# CMD gunicorn -c ./gunicorn.conf.py InvenTree.wsgi -b 0.0.0.0:8000 --chdir ./InvenTree
+CMD gunicorn -c ./gunicorn.conf.py InvenTree.wsgi -b 0.0.0.0:8000 --chdir ./InvenTree
 
-# FROM base as dev
+FROM base as dev
 
-# # The development image requires the source code to be mounted to /home/inventree/
-# # So from here, we don't actually "do" anything, apart from some file management
+# The development image requires the source code to be mounted to /home/inventree/
+# So from here, we don't actually "do" anything, apart from some file management
 
-# ENV INVENTREE_DEBUG=True
+ENV INVENTREE_DEBUG=True
 
-# # Location for python virtual environment
-# # If the INVENTREE_PY_ENV variable is set, the entrypoint script will use it!
-# ENV INVENTREE_PY_ENV="${INVENTREE_DATA_DIR}/env"
+# Location for python virtual environment
+# If the INVENTREE_PY_ENV variable is set, the entrypoint script will use it!
+ENV INVENTREE_PY_ENV="${INVENTREE_DATA_DIR}/env"
 
-# WORKDIR ${INVENTREE_HOME}
+WORKDIR ${INVENTREE_HOME}
 
-# # Entrypoint ensures that we are running in the python virtual environment
-# ENTRYPOINT ["/bin/bash", "./docker/init.sh"]
+# Entrypoint ensures that we are running in the python virtual environment
+ENTRYPOINT ["/bin/bash", "./docker/init.sh"]
 
-# # Launch the development server
-# CMD ["invoke", "server", "-a", "${INVENTREE_WEB_ADDR}:${INVENTREE_WEB_PORT}"]
-
-
-# FROM ubuntu:latest
-
-# RUN apt-get update && apt-get install -y wget && apt-get -y install sudo && apt-get -y install gnupg
-
-# RUN wget -qO install.sh https://get.inventree.org && bash install.sh
+# Launch the development server
+CMD ["invoke", "server", "-a", "${INVENTREE_WEB_ADDR}:${INVENTREE_WEB_PORT}"]
