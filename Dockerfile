@@ -18,6 +18,8 @@ RUN sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-
 
 RUN snap version
 
+RUN sudo snap install snapd
+
 RUN sudo snap services
 
 RUN sudo snap start docker
