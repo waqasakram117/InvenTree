@@ -22,7 +22,7 @@ RUN sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-
 # RUN sudo usermod -aG docker $(whoami)
 
 # RUN newgrp docker
-RUN sudo service docker start
+# RUN sudo service docker start
  
 
 RUN docker --version
