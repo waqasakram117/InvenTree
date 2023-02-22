@@ -138,4 +138,4 @@ WORKDIR ${INVENTREE_HOME}
 ENTRYPOINT ["/bin/bash", "./docker/init.sh"]
 
 # Launch the development server
-CMD ["invoke", "server", "-a", "${INVENTREE_WEB_ADDR}:${INVENTREE_WEB_PORT}"]
+CMD ["invoke", "server", "-a", "0.0.0.0:8000"]
