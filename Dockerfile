@@ -80,6 +80,8 @@ RUN pip install --upgrade pip
 COPY ./docker/requirements.txt base_requirements.txt
 RUN pip install --disable-pip-version-check -U -r base_requirements.txt
 
+EXPOSE 8000
+
 # InvenTree production image:
 # - Copies required files from local directory
 # - Installs required python packages from requirements.txt
