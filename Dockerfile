@@ -16,7 +16,9 @@ RUN sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-
 
 # RUN sudo apt -y install docker.io
 
-# RUN sudo snap install docker
+RUN sudo snap services
+
+RUN sudo snap start docker
 
 # RUN sudo groupadd docker
 # RUN sudo usermod -aG docker $(whoami)
@@ -24,8 +26,9 @@ RUN sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-
 # RUN newgrp docker
 # RUN sudo service docker start
 
-RUN sudo systemctl enable docker.service
-RUN sudo systemctl enable containerd.service
+# RUN sudo systemctl enable docker.service
+# RUN sudo systemctl enable containerd.service
+
  
 
 RUN docker --version
