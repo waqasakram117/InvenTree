@@ -18,10 +18,10 @@ RUN sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-
 
 # RUN sudo snap install docker
 
-RUN sudo groupadd docker
-RUN sudo usermod -aG docker $(whoami)
+# RUN sudo groupadd docker
+# RUN sudo usermod -aG docker $(whoami)
 
-RUN newgrp docker
+# RUN newgrp docker
 RUN sudo service docker restart
  
 
