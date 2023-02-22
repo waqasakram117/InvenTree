@@ -2,13 +2,17 @@ FROM ubuntu:latest
 
 RUN apt-get update && apt-get install -y wget && apt-get -y install sudo && apt-get -y install gnupg
 
-RUN sudo apt-get remove docker docker.io
+RUN sudo apt-get remove docker docker-engine docker.io containerd runc
 
-RUN apt-get -y update && sudo apt-get install -y snapd
+RUN sudo chmod a+r /etc/apt/keyrings/docker.gpg
 
-RUN sudo apt -y install docker.io
+RUN apt-get -y update
 
-RUN sudo snap install docker
+RUN sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# RUN sudo apt -y install docker.io
+
+# RUN sudo snap install docker
 
 RUN docker --version
 
