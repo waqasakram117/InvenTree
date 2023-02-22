@@ -4,11 +4,11 @@ RUN apt-get update && apt-get install -y wget && apt-get -y install sudo && apt-
 
 RUN sudo apt-get remove docker docker.io
 
-RUN apt-get update
+RUN apt-get -y update
 
-RUN sudo apt install docker.io
+RUN sudo apt -y install docker.io
 
-RUN sudo snap install docker
+RUN sudo snap -y install docker
 
 RUN docker --version
 
