@@ -1,8 +1,10 @@
 FROM ubuntu:latest
 
+RUN apt-get update && apt-get install -y wget && apt-get -y install sudo && apt-get -y install gnupg
+
 RUN sudo apt-get remove docker docker-engine docker.io
 
-RUN apt-get update && apt-get install -y wget && apt-get -y install sudo && apt-get -y install gnupg
+RUN apt-get update
 
 RUN sudo apt install docker.io
 
