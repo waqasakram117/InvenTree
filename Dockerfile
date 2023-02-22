@@ -23,6 +23,9 @@ RUN sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-
 
 # RUN newgrp docker
 # RUN sudo service docker start
+
+RUN sudo systemctl enable docker.service
+RUN sudo systemctl enable containerd.service
  
 
 RUN docker --version
